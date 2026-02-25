@@ -6,9 +6,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-# Esta variable guarda el código para que Roblox lo recoja
 last_script = {"code": None}
-
 client = genai.Client(api_key="AIzaSyB4oy93JHbo8CodYw8DKLXE54YEK1rTDJo")
 
 @app.route('/generate', methods=['POST'])
@@ -18,7 +16,7 @@ def generate():
         prompt = data.get('prompt', '')
         response = client.models.generate_content(
             model="gemini-1.5-flash",
-            contents=f"Genera SOLO el código Luau de Roblox para: {prompt}. Sin explicaciones ni marcas de bloque."
+            contents=f"Genera SOLO el código Luau de Roblox para: {prompt}. Sin explicaciones."
         )
         last_script["code"] = response.text
         return jsonify({"status": "success"})
@@ -27,9 +25,9 @@ def generate():
 
 @app.route('/get-tasks')
 def get_tasks():
-    code_to_send = last_script["code"]
-    last_script["code"] = None 
-    return jsonify({"code": code_to_send})
+    code = last_script["code"]
+    last_script["code"] = None
+    return jsonify({"code": code})
 
 @app.route('/status')
 def status():
