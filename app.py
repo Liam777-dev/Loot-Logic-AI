@@ -4,13 +4,16 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+# Esto permite que tu Dashboard web hable con el servidor sin bloqueos
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 last_script = {"code": None}
 client = genai.Client(api_key="AIzaSyB4oy93JHbo8CodYw8DKLXE54YEK1rTDJo")
 
-@app.route('/generate', methods=['POST'])
+@app.route('/generate', methods=['POST', 'OPTIONS'])
 def generate():
+    if request.method == 'OPTIONS': 
+        return jsonify({}), 200
     try:
         data = request.json
         prompt = data.get('prompt', '')
