@@ -201,7 +201,7 @@
             if(statusLabel.innerText.includes("NOT")) statusLabel.innerText = "● ATTEMPTING CONNECTION...";
 
             try {
-                const check = await fetch('http://localhost:5000/status');
+                const check = await fetch('https://loot-logic-ai-1.onrender.com/status');
                 if(check.ok) {
                     statusLabel.innerText = "● PLUGIN CONNECTED";
                     statusLabel.style.color = "#2ecc71";
@@ -236,7 +236,7 @@
             log.innerHTML += `<div style="color: #f1c40f;">> Solicitud enviada: ${inp.value}</div>`;
 
             try {
-                const res = await fetch('http://localhost:5000/generate', {
+                const res = await fetch('https://loot-logic-ai-1.onrender.com/generate', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({prompt: inp.value})
@@ -280,4 +280,5 @@
         }
     </script>
 </body>
+
 </html>
