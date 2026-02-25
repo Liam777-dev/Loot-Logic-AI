@@ -22,6 +22,11 @@ def generate():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# Ruta de estado para que el Dashboard se ponga en VERDE
+@app.route('/status')
+def status():
+    return {"status": "ok"}
+
 if __name__ == '__main__':
     # Esto es vital para que Render no falle
     port = int(os.environ.get("PORT", 5000))
